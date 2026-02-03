@@ -49,6 +49,26 @@
       "passwordHash": "$2b$10$zyT9s..r3QYCzBFg2dbzH.h2XRSN9lSreyW1wGThcmkasJlVx8ouy",
       "role": "customer",
       "products": []
+    },
+    {
+      "id": 6,
+      "email": "maria@gmail.com",
+      "name": "Maria",
+      "telefono": "123",
+      "domicilio": "alli",
+      "passwordHash": "$2b$10$SEZj512kZFGx1NayiMRmAuArcg23uRJK2K48rk4.hKA0BUi.T7/sy",
+      "role": "customer",
+      "products": []
+    },
+    {
+      "id": 7,
+      "email": "alberto@gmail.com",
+      "name": "alberto",
+      "telefono": "123",
+      "domicilio": "alli",
+      "passwordHash": "$2b$10$HN07oVlw/oAiTqYTD7YKjORQ/3H4keKAODD4ra0zq9JAUfyXLZDgy",
+      "role": "customer",
+      "products": []
     }
   ],
   "products": [
@@ -107,13 +127,6 @@
       "description": "La simulación de fútbol más realista del mundo.",
       "price": 59.99,
       "stock": 30
-    },
-    {
-      "id": "p9",
-      "name": "Spider-Man 2",
-      "description": "Balancéate por Nueva York como Peter Parker y Miles Morales.",
-      "price": 74.99,
-      "stock": 5
     }
   ]
 }

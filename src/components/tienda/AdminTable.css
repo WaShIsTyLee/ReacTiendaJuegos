@@ -1,84 +1,92 @@
-.admin-table-container {
-  overflow-x: auto; /* Para que no se rompa en móviles */
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
-}
-
+/* Tabla general */
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  text-align: left;
-  font-family: inherit;
+  margin-top: 2rem;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow:
+    0 0 10px rgba(6, 182, 212, 0.3),
+    inset 0 0 8px rgba(6, 182, 212, 0.1);
 }
 
+/* Encabezado */
 .admin-table thead {
-  background-color: #f9fafb;
-  border-bottom: 2px solid #e5e7eb;
+  background: rgba(6, 182, 212, 0.1);
 }
 
 .admin-table th {
-  padding: 12px 16px;
-  color: #4b5563;
+  padding: 0.75rem 1rem;
+  color: #67e8f9;
+  text-align: left;
   font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
+  text-shadow: 0 0 6px rgba(103, 232, 249, 0.5);
+  border-bottom: 1px solid rgba(103, 232, 249, 0.3);
 }
 
-.admin-table td {
-  padding: 16px;
-  border-bottom: 1px solid #f3f4f6;
-  color: #1f2937;
-  font-size: 0.9rem;
-}
-
-/* Filas alternas para mejor lectura */
-.admin-table tbody tr:nth-child(even) {
-  background-color: #fbfbfb;
+/* Filas */
+.admin-table tbody tr {
+  transition: background 0.3s ease, transform 0.2s ease;
+  border-bottom: 1px solid rgba(103, 232, 249, 0.1);
 }
 
 .admin-table tbody tr:hover {
-  background-color: #f3f4f6; /* Efecto hover en la fila */
+  background: rgba(6, 182, 212, 0.1);
+  transform: translateY(-1px);
 }
 
-/* Estilos para los botones */
-.btn-action {
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
+/* Celdas */
+.admin-table td {
+  padding: 0.75rem 1rem;
+  color: #e5e7eb;
+}
+
+/* Botones dentro de la tabla */
+.admin-table button {
+  padding: 0.5rem 0.8rem;
+  margin-right: 0.5rem;
+  border-radius: 8px;
   border: none;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-edit {
-  background-color: #fef3c7;
-  color: #92400e;
-  margin-right: 8px;
-}
-
-.btn-edit:hover {
-  background-color: #fde68a;
-}
-
-.btn-delete {
-  background-color: #fee2e2;
-  color: #b91c1c;
-}
-
-.btn-delete:hover {
-  background-color: #fecaca;
-}
-
-/* Badge para el stock */
-.stock-badge {
-  background: #e0f2fe;
-  color: #0369a1;
-  padding: 2px 8px;
-  border-radius: 99px;
+  font-size: 0.9rem;
   font-weight: 600;
-  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 0 6px rgba(6, 182, 212, 0.5),
+    0 0 12px rgba(59, 130, 246, 0.2);
+}
+
+/* Botón Actualizar */
+.admin-table button:nth-child(1) {
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
+  color: #fff;
+}
+
+.admin-table button:nth-child(1):hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 10px rgba(59, 130, 246, 0.8),
+    0 0 20px rgba(6, 182, 212, 0.6);
+}
+
+/* Botón Eliminar */
+.admin-table button:nth-child(2) {
+  background: linear-gradient(90deg, #f43f5e, #e11d48);
+  color: #fff;
+}
+
+.admin-table button:nth-child(2):hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 10px rgba(244, 63, 94, 0.8),
+    0 0 20px rgba(225, 29, 72, 0.6);
+}
+
+/* Focus accesible para botones */
+.admin-table button:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(6, 182, 212, 0.6),
+    0 0 10px rgba(59, 130, 246, 0.4);
 }

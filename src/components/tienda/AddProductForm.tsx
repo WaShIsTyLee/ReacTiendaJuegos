@@ -27,11 +27,11 @@ export const AddProductForm = ({ onProductAdded }: AddProductFormProps) => {
   return (
     <section className="admin-form-section">
       <h2>Añadir Nuevo Producto</h2>
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+      <div>
         <input type="text" placeholder="Nombre" value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
         <input type="number" placeholder="Precio" value={form.price} onChange={e => setForm({...form, price: e.target.value})} />
         <input type="number" placeholder="Stock" value={form.stock} onChange={e => setForm({...form, stock: e.target.value})} />
-        <button onClick={handleSubmit} style={{ background: "#28a745", color: "white", border: "none", padding: "10px", borderRadius: "4px" }}>
+        <button onClick={handleSubmit}>
           Crear Producto
         </button>
       </div>

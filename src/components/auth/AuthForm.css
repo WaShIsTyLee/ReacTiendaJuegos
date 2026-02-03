@@ -1,37 +1,25 @@
-/* Sección completa del formulario */
-.admin-form-section {
-  background: rgba(15, 23, 42, 0.9);
-  border-radius: 16px;
-  padding: 2rem;
-  margin-bottom: 2rem;
-  border: 1px solid rgba(0, 195, 255, 0.2);
-  box-shadow:
-    0 0 10px rgba(6, 182, 212, 0.3),
-    inset 0 0 8px rgba(6, 182, 212, 0.1);
-}
-
-/* Título del formulario */
-.admin-form-section h2 {
-  color: #67e8f9;
-  text-align: center;
-  font-size: 1.8rem;
-  text-shadow: 0 0 8px rgba(103, 232, 249, 0.6);
-  margin-bottom: 1.5rem;
-}
-
-/* Contenedor de inputs y botón */
-.admin-form-section div {
+/* Contenedor general del form */
+.auth-form-content {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-/* Inputs del formulario */
-.admin-form-section input {
+/* Título dentro del form */
+.auth-form-content h2 {
+  text-align: center;
+  color: #67e8f9;
+  font-size: 1.8rem;
+  text-shadow: 0 0 8px rgba(103, 232, 249, 0.6);
+  margin-bottom: 1rem;
+}
+
+/* Inputs */
+.auth-form-content input {
   padding: 0.75rem 1rem;
   border-radius: 12px;
   border: 1px solid rgba(103, 232, 249, 0.4);
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   color: #e5e7eb;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -39,20 +27,20 @@
 }
 
 /* Placeholder */
-.admin-form-section input::placeholder {
+.auth-form-content input::placeholder {
   color: #9ca3af;
 }
 
 /* Focus glow */
-.admin-form-section input:focus {
+.auth-form-content input:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 8px #06b6d4, 0 0 15px rgba(6, 182, 212, 0.4);
-  background: rgba(0,0,0,0.8);
+  background: rgba(0, 0, 0, 0.8);
 }
 
-/* Botón de crear producto */
-.admin-form-section button {
+/* Botón de submit */
+.auth-form-content button {
   padding: 0.75rem 1rem;
   border-radius: 12px;
   border: none;
@@ -69,22 +57,22 @@
 }
 
 /* Hover del botón */
-.admin-form-section button:hover {
+.auth-form-content button:hover {
+  background: linear-gradient(90deg, #3b82f6, #06b6d4);
   transform: translateY(-2px);
   box-shadow:
     0 0 15px rgba(59, 130, 246, 0.8),
     0 0 30px rgba(6, 182, 212, 0.6);
-  background: linear-gradient(90deg, #3b82f6, #06b6d4);
 }
 
 /* Click del botón */
-.admin-form-section button:active {
+.auth-form-content button:active {
   transform: translateY(0);
   box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
 }
 
 /* Focus accesible */
-.admin-form-section button:focus {
+.auth-form-content button:focus {
   outline: none;
   box-shadow:
     0 0 0 3px rgba(6, 182, 212, 0.6),

@@ -1,86 +1,75 @@
-/* src/pages/AuthPage.css */
-
+/* Fondo general */
 .auth-container {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #0f2027, #05080d);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #e5e7eb;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Título principal */
 .auth-title {
-  margin-bottom: 8px;
-  color: #2d3436;
-  font-size: 2rem;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #e0f2ff;
+  text-shadow: 0 0 8px rgba(0, 195, 255, 0.6);
 }
 
+/* Subtítulo */
 .auth-subtitle {
-  color: #636e72;
-  margin-bottom: 24px;
   font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #9ca3af;
+  text-align: center;
 }
 
+/* Tarjeta del formulario */
 .auth-card {
-  border: none;
-  padding: 40px;
+  background: rgba(15, 23, 42, 0.9);
   border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  background-color: white;
+  padding: 2rem;
   width: 100%;
   max-width: 420px;
-  transition: transform 0.3s ease;
+  box-shadow:
+    0 0 15px rgba(0, 195, 255, 0.15),
+    inset 0 0 20px rgba(0, 195, 255, 0.05);
+  border: 1px solid rgba(0, 195, 255, 0.2);
+  backdrop-filter: blur(8px);
 }
 
-.auth-card:hover {
-  transform: translateY(-5px);
-}
-
+/* Footer */
 .auth-footer {
-  margin-top: 24px;
+  margin-top: 1.5rem;
   text-align: center;
-  border-top: 1px solid #edf2f7;
-  padding-top: 20px;
 }
 
+/* Botón para cambiar login/register */
 .auth-switch-btn {
-  background: none;
+  background: transparent;
   border: none;
-  color: #4a90e2;
-  font-weight: 600;
+  color: #67e8f9;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: color 0.2s;
-  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 6px rgba(103, 232, 249, 0.5);
 }
 
 .auth-switch-btn:hover {
-  color: #357abd;
-  text-decoration: underline;
+  color: #a5f3fc;
+  text-shadow: 0 0 10px rgba(165, 243, 252, 0.8);
+  transform: scale(1.03);
 }
 
-/* Estilos extra para los inputs de AuthForm si quieres que se vean bien */
-input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 16px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  box-sizing: border-box; /* Importante para el padding */
-}
+/* Responsive */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 1.5rem;
+  }
 
-button[type="submit"] {
-  width: 100%;
-  padding: 12px;
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-button[type="submit"]:hover {
-  background-color: #357abd;
+  .auth-title {
+    font-size: 2rem;
+  }
 }

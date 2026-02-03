@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { loginUser, registerUser } from "../../services/authService"; // Importación limpia
 import { useNavigate } from "react-router-dom";
 import type { AuthResponse } from "../../types/Auth";
+import "./AuthForm.css";
 
 interface AuthFormProps {
   isRegister?: boolean;

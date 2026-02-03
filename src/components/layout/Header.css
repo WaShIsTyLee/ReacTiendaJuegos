@@ -1,64 +1,77 @@
-/* Header.css */
+/* Contenedor del header */
 .admin-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  color: white;
+  padding: 1rem 2rem;
+  background: rgba(15, 23, 42, 0.95);
   border-radius: 12px;
+  box-shadow:
+    0 0 10px rgba(6, 182, 212, 0.3),
+    inset 0 0 8px rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(0, 195, 255, 0.2);
   margin-bottom: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
+/* Título del header */
 .admin-header h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
+  color: #67e8f9;
+  font-size: 1.8rem;
+  text-shadow: 0 0 8px rgba(103, 232, 249, 0.6);
   margin: 0;
-  letter-spacing: -0.025em;
-  background: linear-gradient(to right, #60a5fa, #a855f7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
+/* Contenedor de acciones */
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 1rem;
+  color: #e5e7eb;
+  font-size: 1rem;
+  text-shadow: 0 0 4px rgba(103, 232, 249, 0.3);
 }
 
-.user-welcome {
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #cbd5e1;
-}
-
+/* Botón de cerrar sesión */
 .logout-btn {
-  background-color: #ef4444;
-  color: white;
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
   border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
+  background: linear-gradient(90deg, #f43f5e, #e11d48);
+  color: #fff;
   font-weight: 600;
-  font-size: 0.85rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow:
+    0 0 6px rgba(244, 63, 94, 0.5),
+    0 0 12px rgba(225, 29, 72, 0.3);
 }
 
+/* Hover */
 .logout-btn:hover {
-  background-color: #dc2626;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 12px rgba(244, 63, 94, 0.8),
+    0 0 25px rgba(225, 29, 72, 0.6);
+  background: linear-gradient(90deg, #e11d48, #f43f5e);
 }
 
+/* Click */
 .logout-btn:active {
   transform: translateY(0);
+  box-shadow: 0 0 8px rgba(225, 29, 72, 0.4);
 }
 
-@media (max-width: 640px) {
-  .admin-header {
-    flex-direction: column;
-    gap: 1rem;
-    text-align: center;
-  }
+/* Focus */
+.logout-btn:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgba(225, 29, 72, 0.6),
+    0 0 15px rgba(244, 63, 94, 0.4);
+}
+
+/* Texto de saludo */
+.header-actions span {
+  color: #67e8f9;
+  text-shadow: 0 0 6px rgba(103, 232, 249, 0.5);
 }

@@ -1,0 +1,119 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "ana.dev@example.com",
+      "role": "customer",
+      "name": "Ana García",
+      "telefono": "+52 555-0123",
+      "domicilio": "Calle Falsa 123, Ciudad de México",
+      "passwordHash": "$2b$10$7696fM6N9V7V6S6n6P6n6Ou6N6fM6N9V7V6S6n6P6n6Ou6N6fM6",
+      "products": []
+    },
+    {
+      "id": 2,
+      "email": "beto.coder@example.com",
+      "role": "customer",
+      "name": "Beto Torres",
+      "telefono": "+52 555-9876",
+      "domicilio": "Av. Siempre Viva 742, Monterrey",
+      "passwordHash": "$2b$10$E9N17M78SInrW9vWf0p6Ue7A6K5nS6G7B7H0uYv7S7H7U7E7H7I7G",
+      "products": []
+    },
+    {
+      "id": 3,
+      "email": "paco@test.com",
+      "role": "admin",
+      "name": "Paco Garcia",
+      "telefono": "666555444",
+      "domicilio": "Calle Principal 123",
+      "passwordHash": "$2b$10$81oRHY/udMmw/lD3gtO3Qu1wZiTfpp1CLDhBrNNyiIltaSukbs1Qy",
+      "products": []
+    },
+    {
+      "id": 4,
+      "email": "prueba@gmail.com",
+      "role": "admin",
+      "name": "prueba",
+      "telefono": "123",
+      "domicilio": "prueba",
+      "passwordHash": "$2b$10$1UkRRU80B54vVkwiUfcZCORED3UE.x6vge8XZfZxGVyL6kHj2fVwa",
+      "products": []
+    },
+    {
+      "id": 5,
+      "email": "pepe@gmail.com",
+      "name": "pepe",
+      "telefono": "123",
+      "domicilio": "123",
+      "passwordHash": "$2b$10$zyT9s..r3QYCzBFg2dbzH.h2XRSN9lSreyW1wGThcmkasJlVx8ouy",
+      "role": "customer",
+      "products": []
+    }
+  ],
+  "products": [
+    {
+      "id": "p1",
+      "name": "The Legend of Zelda: Breath of the Wild",
+      "description": "Una aventura épica de mundo abierto.",
+      "price": 59.99,
+      "stock": 15
+    },
+    {
+      "id": "p2",
+      "name": "Elden Ring",
+      "description": "Desafiante RPG de acción en las Tierras Intermedias.",
+      "price": 69.99,
+      "stock": 10
+    },
+    {
+      "id": "p3",
+      "name": "Cyberpunk 2077",
+      "description": "RPG de acción futurista en Night City.",
+      "price": 49.99,
+      "stock": 25
+    },
+    {
+      "id": "p4",
+      "name": "Red Dead Redemption 2",
+      "description": "Una historia épica de forajidos en el salvaje oeste.",
+      "price": 39.99,
+      "stock": 8
+    },
+    {
+      "id": "p5",
+      "name": "Hollow Knight",
+      "description": "Metroidvania de acción clásica en un mundo vasto y en ruinas.",
+      "price": 14.99,
+      "stock": 50
+    },
+    {
+      "id": "p6",
+      "name": "God of War Ragnarök",
+      "description": "Kratos y Atreus deben viajar a cada uno de los nueve reinos.",
+      "price": 69.99,
+      "stock": 12
+    },
+    {
+      "id": "p7",
+      "name": "Minecraft",
+      "description": "Explora mundos infinitos y construye cualquier cosa.",
+      "price": 24.99,
+      "stock": 100
+    },
+    {
+      "id": "p8",
+      "name": "FIFA 24",
+      "description": "La simulación de fútbol más realista del mundo.",
+      "price": 59.99,
+      "stock": 30
+    },
+    {
+      "id": "p9",
+      "name": "Spider-Man 2",
+      "description": "Balancéate por Nueva York como Peter Parker y Miles Morales.",
+      "price": 74.99,
+      "stock": 5
+    }
+  ]
+}

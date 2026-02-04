@@ -1,37 +1,144 @@
-/* Contenedor general */
-.admin-container {
+/* --- VARIABLES Y RESET --- */
+:root {
+  --bg-dark-radial: radial-gradient(circle at top, #0f2027, #05080d);
+  --bg-sidebar: #0a0f16;
+  --accent-cyan: #67e8f9;
+  --accent-blue: #3b82f6;
+  --accent-purple: #a855f7;
+  --text-gray: #e5e7eb;
+  --text-muted: #9ca3af;
+  --glass: rgba(15, 23, 42, 0.9);
+  --transition: all 0.3s ease;
+}
+
+/* --- ESTRUCTURA DE LAYOUT --- */
+.admin-layout {
+  display: flex;
   min-height: 100vh;
-  background: radial-gradient(circle at top, #0f2027, #05080d);
-  padding: 2rem;
-  color: #e5e7eb;
+  background: var(--bg-dark-radial);
+  color: var(--text-gray);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  height: 100vh;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid rgba(103, 232, 249, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: var(--text-gray);
+}
+
+.logo-accent {
+  color: var(--accent-purple);
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.6);
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0.8rem 1rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+  transition: var(--transition);
+}
+
+.sidebar-nav a:hover, .active-link {
+  background: rgba(103, 232, 249, 0.1);
+  color: var(--accent-cyan) !important;
+}
+
+.active-link {
+  box-shadow: inset 0 0 10px rgba(103, 232, 249, 0.1);
+  border-left: 4px solid var(--accent-cyan);
+}
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+/* --- COMPONENTES INTERNOS --- */
+
+/* Overview Cards (Stats) */
+.overview-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.overview-cards .card {
+  background: var(--glass);
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  text-align: center;
+}
+
+.overview-cards h4 { color: var(--text-muted); margin-bottom: 0.5rem; }
+.overview-cards p { font-size: 1.8rem; font-weight: bold; color: var(--accent-cyan); }
 
 /* Grid de productos */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+  /* Esto crea columnas automáticas que no bajan de 280px */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+  gap: 2.5rem; /* Aumentamos el espacio entre tarjetas */
+  padding: 2rem;
+  align-items: start; /* Evita que las tarjetas se estiren raro verticalmente */
 }
 
-/* Mensaje de carga */
-.admin-container p {
+/* Tarjetas de producto */
+.product-card {
+  background: var(--glass);
+  border-radius: 16px;
+  padding: 1rem;
   text-align: center;
-  font-size: 1.2rem;
-  color: #9ca3af;
-  text-shadow: 0 0 6px rgba(103, 232, 249, 0.3);
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+  border: 1px solid rgba(0, 195, 255, 0.2);
+  transition: var(--transition);
 }
 
-/* Títulos de sección (ej: Header) */
-.admin-container h1,
-.admin-container h2 {
-  color: #67e8f9;
-  text-shadow: 0 0 8px rgba(103, 232, 249, 0.6);
+.product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
 }
 
-/* Botones generales */
-.admin-container button {
+.product-card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 0.5rem;
+}
+
+/* Botones */
+button {
   padding: 0.6rem 1rem;
   border-radius: 10px;
   border: none;
@@ -39,79 +146,59 @@
   color: #fff;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow:
-    0 0 8px rgba(6, 182, 212, 0.6),
-    0 0 20px rgba(59, 130, 246, 0.4);
+  transition: var(--transition);
+  box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
 }
 
-/* Hover y click de botones */
-.admin-container button:hover {
+button:hover {
   transform: translateY(-2px);
-  box-shadow:
-    0 0 15px rgba(59, 130, 246, 0.8),
-    0 0 30px rgba(6, 182, 212, 0.6);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
 }
 
-.admin-container button:active {
-  transform: translateY(0);
-  box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
+.logout-btn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  margin-top: auto;
+  box-shadow: none;
 }
 
-/* Inputs de formularios (AddProductForm) */
-.admin-container input,
-.admin-container select {
+.logout-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+}
+
+/* Inputs */
+input, select {
   padding: 0.6rem 1rem;
   border-radius: 12px;
   border: 1px solid rgba(103, 232, 249, 0.4);
   background: rgba(0,0,0,0.6);
-  color: #e5e7eb;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: inset 0 0 5px rgba(103, 232, 249, 0.2);
-  width: 100%;
+  color: var(--text-gray);
   margin-bottom: 1rem;
 }
 
-.admin-container input:focus,
-.admin-container select:focus {
-  outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 8px #06b6d4, 0 0 15px rgba(6, 182, 212, 0.4);
-  background: rgba(0,0,0,0.8);
+/* Pantalla de carga */
+.loading-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg-dark-radial);
+  color: var(--accent-cyan);
 }
 
-/* Tarjetas de producto */
-.product-card {
-  background: rgba(15, 23, 42, 0.9);
-  border-radius: 16px;
-  padding: 1rem;
-  text-align: center;
-  box-shadow:
-    0 0 10px rgba(6, 182, 212, 0.3),
-    inset 0 0 8px rgba(6, 182, 212, 0.1);
-  border: 1px solid rgba(0,195,255,0.2);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(103, 232, 249, 0.1);
+  border-top: 5px solid var(--accent-cyan);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
 }
 
-.product-card:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 0 15px rgba(59, 130, 246, 0.6),
-    inset 0 0 10px rgba(6, 182, 212, 0.2);
-}
-
-/* Imágenes de producto */
-.product-card img {
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 0.5rem;
-}
-
-/* Nombre y precio de producto */
-.product-card h3,
-.product-card p {
-  margin: 0.25rem 0;
-  color: #e5e7eb;
-  text-shadow: 0 0 4px rgba(103, 232, 249, 0.5);
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

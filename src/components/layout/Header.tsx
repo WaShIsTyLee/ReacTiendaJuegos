@@ -10,7 +10,6 @@ export const Header = ({ title, userName, onLogout }: HeaderProps) => (
     <h1>{title}</h1>
     <div className="header-actions">
       {userName && <span>Hola, {userName}</span>}
-      <button className="logout-btn" onClick={onLogout}>Cerrar Sesión</button>
-    </div>
+     </div>
   </header>
 );

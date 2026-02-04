@@ -74,59 +74,59 @@
   "products": [
     {
       "id": "p1",
-      "name": "The Legend of Zelda: Breath of the Wild",
+      "name": "The Legend of Zelda: BOTW",
       "description": "Una aventura épica de mundo abierto.",
       "price": 59.99,
-      "stock": 15
+      "stock": 15,
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/en/c/c6/The_Legend_of_Zelda_Breath_of_the_Wild.jpg"
     },
     {
       "id": "p2",
       "name": "Elden Ring",
       "description": "Desafiante RPG de acción en las Tierras Intermedias.",
       "price": 69.99,
-      "stock": 10
+      "stock": 10,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg"
     },
     {
       "id": "p3",
       "name": "Cyberpunk 2077",
       "description": "RPG de acción futurista en Night City.",
       "price": 49.99,
-      "stock": 25
+      "stock": 25,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg"
     },
     {
       "id": "p4",
       "name": "Red Dead Redemption 2",
-      "description": "Una historia épica de forajidos en el salvaje oeste.",
+      "description": "Una historia épica de forajidos.",
       "price": 39.99,
-      "stock": 8
+      "stock": 8,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg"
     },
     {
       "id": "p5",
       "name": "Hollow Knight",
-      "description": "Metroidvania de acción clásica en un mundo vasto y en ruinas.",
+      "description": "Metroidvania de acción clásica.",
       "price": 14.99,
-      "stock": 50
+      "stock": 50,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg"
     },
     {
       "id": "p6",
       "name": "God of War Ragnarök",
-      "description": "Kratos y Atreus deben viajar a cada uno de los nueve reinos.",
+      "description": "Kratos y Atreus viajan por los nueve reinos.",
       "price": 69.99,
-      "stock": 12
+      "stock": 12,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2322010/header.jpg"
     },
     {
       "id": "p7",
       "name": "Minecraft",
-      "description": "Explora mundos infinitos y construye cualquier cosa.",
+      "description": "Explora mundos infinitos y construye.",
       "price": 24.99,
-      "stock": 100
-    },
-    {
-      "id": "p8",
-      "name": "FIFA 24",
-      "description": "La simulación de fútbol más realista del mundo.",
-      "price": 59.99,
-      "stock": 30
+      "stock": 100,
+      "imageUrl": "https://upload.wikimedia.org/wikipedia/en/5/51/Minecraft_cover.png"
     }
   ]
 }

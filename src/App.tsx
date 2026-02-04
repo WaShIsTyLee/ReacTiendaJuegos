@@ -1,27 +1,31 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import AuthPage from "./pages/Auth/AuthPage";
 import TiendaPage from "./pages/Tienda/TiendaPage";
+
+// Importamos las nuevas páginas separadas
+import { Dashboard } from "./pages/Tienda/Dashboard";
+import { AdminTablePage } from "./pages/Tienda/AdminTablePage";
+import { AddProductPage } from "./pages/Tienda/AddProductPage";
+import { Usuarios } from "./pages/Tienda/Usuarios";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Cambiamos /auth por /login para que coincida con tus redirecciones */}
         <Route path="/login" element={<AuthPage />} />
 
-        {/* AÑADIMOS LA RUTA DE LA TIENDA AQUÍ */}
+        {/* RUTAS DE ADMINISTRACIÓN - Ahora limpias */}
+        <Route path="/admin" element={<TiendaPage />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="inventario" element={<AdminTablePage />} />
+          <Route path="nuevo-juego" element={<AddProductPage />} />
+          <Route path="usuarios" element={<Usuarios />} />
+        </Route>
+
         <Route path="/tienda" element={<TiendaPage />} />
-
-        {/* Ruta por defecto: si entras a "/" te manda a "/login" */}
-        <Route path="/" element={<Navigate to="/login" />} />
-
-        {/* Ruta 404 */}
-        <Route path="*" element={<h2>404 - Not Found</h2>} />
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Router>
   );

@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
 
-// Servicios y Tipos
-import { getProducts } from "../../services/productService";
+// Servicios y Storage
+import { productService } from "../../services/productService";
+import { authStorage } from "../../auth/authStorage"; 
 import type { Product } from "../../types/Product";
 
 // Componentes de Layout
@@ -12,7 +13,6 @@ import { ProductCard } from "../../components/tienda/ProductCard";
 
 import "./TiendaPage.css";
 
-// Interfaz para el contexto compartido con los hijos del Outlet
 export interface TiendaContextType {
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
@@ -27,19 +27,16 @@ const TiendaPage = () => {
   const [loading, setLoading] = useState(true);
   const hasFetched = useRef(false);
 
-  const [user] = useState(() => {
-    const saved = localStorage.getItem("user");
-    return saved ? JSON.parse(saved) : null;
-  });
+  const session = authStorage.get();
+  const user = session?.user; 
 
   useEffect(() => {
-    if (!user) {
+    if (!session) {
       navigate("/login");
       return;
     }
 
-    // Seguridad: Si un admin entra a /tienda, lo movemos a su panel
-    if (user.role === "admin" && location.pathname === "/tienda") {
+    if (user?.role === "admin" && location.pathname === "/tienda") {
       navigate("/admin/dashboard");
       return;
     }
@@ -49,10 +46,18 @@ const TiendaPage = () => {
     const loadData = async () => {
       try {
         hasFetched.current = true; 
-        const data = await getProducts();
-        setProducts(data);
+        const data = await productService.getAll(); 
+        
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else if (data && typeof data === 'object' && (data as any).products) {
+          setProducts((data as any).products);
+        } else {
+          setProducts([]); 
+        }
       } catch (error) {
         console.error("Error al cargar productos:", error);
+        setProducts([]); 
         hasFetched.current = false; 
       } finally {
         setLoading(false);
@@ -60,27 +65,31 @@ const TiendaPage = () => {
     };
 
     loadData();
-  }, [navigate, user, location.pathname]);
+  }, [navigate, session, user, location.pathname]);
 
   const handleLogout = () => {
-    localStorage.clear();
+    authStorage.clear();
     navigate("/login");
   };
 
   const handleDelete = async (id: string | number) => {
-    if (!window.confirm("¿Estás seguro de que quieres eliminar este juego?")) return;
+    if (!window.confirm("¿Estás seguro de eliminar este juego?")) return;
     try {
-      const res = await fetch(`http://localhost:3000/products/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setProducts(prev => prev.filter(p => p.id !== id));
-      }
+      await productService.delete(id);
+      setProducts(prev => prev.filter(p => p.id !== id));
     } catch (e) { 
       console.error("Error al eliminar:", e); 
+      alert("No se pudo eliminar el producto.");
     }
   };
 
   const handleProductAdded = (newP: Product) => {
-    setProducts(prev => [...prev, newP]);
+    setProducts(prev => {
+      const exists = prev.find(p => p.id === newP.id);
+      return exists 
+        ? prev.map(p => p.id === newP.id ? newP : p) 
+        : [...prev, newP];
+    });
     navigate("/admin/inventario");
   };
 
@@ -88,46 +97,50 @@ const TiendaPage = () => {
     return (
       <div className="loading-container">
         <div className="spinner"></div>
-        <p>Iniciando sistema...</p>
+        <p>Sincronizando con el servidor...</p>
       </div>
     );
   }
 
-  // Si la ruta comienza con /admin, renderizamos el Outlet. 
-  // Si no (estamos en /tienda), renderizamos el catálogo.
+  // --- LÓGICA DE RUTAS MEJORADA ---
   const isAdminRoute = location.pathname.startsWith("/admin");
+  // Esta línea es la clave: detecta si estamos exactamente en la raíz de la tienda
+  const isBaseTienda = location.pathname === "/tienda";
 
   return (
     <div className="admin-layout">
-      <Sidebar role={user?.role} onLogout={handleLogout} />
-
+      <Sidebar role={user?.role || "customer"} onLogout={handleLogout} />
+      
       <main className="main-content">
         <Header 
           title={user?.role === "admin" ? "Panel de Gestión" : "Catálogo de Juegos"} 
-          userName={user?.name} 
+          userName={user?.name || "Usuario"} 
           onLogout={handleLogout} 
         />
-
+        
         <div className="content-inner">
-          {!isAdminRoute ? (
-            /* VISTA PARA USUARIOS NORMALES */
-            <div className="products-grid">
-              {products.length > 0 ? (
-                products.map((p) => (
-                  <ProductCard key={p.id} product={p} />
-                ))
-              ) : (
-                <p className="no-products">No hay juegos disponibles en este momento.</p>
-              )}
-            </div>
-          ) : (
-            /* VISTA PARA ADMINISTRADORES */
+          {isAdminRoute ? (
+            /* Rutas de Admin usan Outlet */
             <Outlet context={{ 
               products, 
               setProducts, 
               handleDelete, 
               handleProductAdded 
             } satisfies TiendaContextType} />
+          ) : isBaseTienda ? (
+            /* Solo mostramos el grid si la ruta es EXACTAMENTE /tienda */
+            <div className="products-grid">
+              {Array.isArray(products) && products.length > 0 ? (
+                products.map((p) => <ProductCard key={p.id} product={p} />)
+              ) : (
+                <div className="no-products-msg">
+                  <p>No hay productos disponibles.</p>
+                </div>
+              )}
+            </div>
+          ) : (
+            /* Si es /tienda/producto/p2, mostramos el Outlet para cargar el Detalle */
+            <Outlet />
           )}
         </div>
       </main>

@@ -1,45 +1,46 @@
-import type { AuthResponse, User } from "../types/Auth"; 
+import { http } from "./http";
+import type { AuthResponse, User } from "../types/Auth";
 
-const API_URL = "http://localhost:3000/auth";
+// Endpoints (Rutas relativas porque 'http' ya tiene la baseURL)
+const AUTH_URL = "/auth";
+const USERS_URL = "/users";
 
-// --- FUNCIÓN DE LOGIN (Ahora como GET) ---
-export const loginUser = async (email: string, password: string): Promise<AuthResponse> => {
-  // 1. Construimos la URL con los parámetros (?email=...&password=...)
-  // Usamos encodeURIComponent para que caracteres como '@' no rompan la URL
-  const queryParams = `?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
-  
-  const response = await fetch(`${API_URL}/login${queryParams}`, {
-    method: "GET", // <--- CAMBIADO de POST a GET
-    headers: { "Content-Type": "application/json" },
-    // El body se ELIMINA, no se puede enviar body en un GET
-  });
+export const authService = {
+  /**
+   * Login de usuario (GET con Query Params)
+   */
+  login: (email: string, password: string): Promise<AuthResponse> => {
+    const params = `?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+    return http.get<AuthResponse>(`${AUTH_URL}/login${params}`)
+      .then(res => res.data);
+  },
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Error en el login");
-  }
-
-  return response.json();
-};
-
-// --- FUNCIÓN DE REGISTRO (Se queda como POST) ---
-// El registro DEBE seguir siendo POST porque envía muchos datos y crea un recurso nuevo
-export const registerUser = async (
-  userData: Omit<User, 'id' | 'role'> & { password: string, role?: string }
-): Promise<AuthResponse> => {
-  const response = await fetch(`${API_URL}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+  /**
+   * Registro de nuevo usuario (POST)
+   */
+  register: (userData: Omit<User, 'id' | 'role'> & { password: string, role?: string }): Promise<AuthResponse> => {
+    const payload = {
       ...userData,
       role: userData.role || 'customer'
-    }),
-  });
+    };
+    return http.post<AuthResponse>(`${AUTH_URL}/register`, payload)
+      .then(res => res.data);
+  },
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.message || "Error en el registro");
+  /**
+   * Eliminar un usuario (DELETE)
+   * Gracias al interceptor en http.ts, el Token se envía solo
+   */
+  deleteUser: (id: number | string): Promise<void> => {
+    return http.delete(`${USERS_URL}/${id}`)
+      .then(() => {});
+  },
+
+  /**
+   * Obtener lista de usuarios (Opcional, útil para el Admin)
+   */
+  getAllUsers: (): Promise<User[]> => {
+    return http.get<User[]>(USERS_URL)
+      .then(res => res.data);
   }
-
-  return response.json();
 };

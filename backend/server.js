@@ -8,12 +8,19 @@ const PORT = process.env.PORT ?? 3000;
 const JWT_SECRET = process.env.JWT_SECRET ?? "tu-secreto-seguro";
 
 const app = express();
-app.use(cors());
-app.use(express.json());
 
-const router = jsonServer.router("db.json");
-const db = router.db;
+// MIDDLEWARES: Capas de software por las que pasa la petición antes de llegar a las rutas
+app.use(cors()); // Permite peticiones desde otros dominios (como tu React en el puerto 5173)
+app.use(express.json()); // Permite que el servidor entienda datos en formato JSON que vienen en el body
 
+// CONFIGURACIÓN DE BASE DE DATOS (JSON SERVER)
+const router = jsonServer.router("db.json"); // Conectamos con nuestro archivo de persistencia
+const db = router.db; // Obtenemos acceso directo a la base de datos para operaciones manuales
+
+/**
+ * FUNCIÓN AUXILIAR: Crea un "Pase VIP" (Token JWT) para el usuario.
+ * Guarda dentro del código datos no sensibles como ID, nombre y rol.
+ */
 function signToken(user) {
   return jwt.sign(
     {
@@ -23,25 +30,29 @@ function signToken(user) {
       role: user.role,
     },
     JWT_SECRET,
-    { expiresIn: "8h" },
+    { expiresIn: "8h" }, 
   );
 }
 
-// --- REGISTRO ---
+// ==========================================
+// SECCIÓN DE AUTENTICACIÓN
+// ==========================================
+
+/**
+ * POST /auth/register: Crea un nuevo usuario
+ */
 app.post("/auth/register", async (req, res) => {
   const { email, password, name, telefono, domicilio } = req.body ?? {};
 
   if (!email || !password || !name || !telefono || !domicilio) {
-    return res
-      .status(400)
-      .json({ message: "Todos los campos son obligatorios" });
+    return res.status(400).json({ message: "Todos los campos son obligatorios" });
   }
 
   const exists = db.get("users").find({ email }).value();
-  if (exists)
-    return res.status(409).json({ message: "El email ya está registrado" });
+  if (exists) return res.status(409).json({ message: "El email ya está registrado" });
 
   const passwordHash = await bcrypt.hash(password, 10);
+  
   const users = db.get("users");
   const nextId = (users.maxBy("id").value()?.id ?? 0) + 1;
 
@@ -52,91 +63,127 @@ app.post("/auth/register", async (req, res) => {
     telefono,
     domicilio,
     passwordHash,
-    role: "customer",
+    role: "customer", 
     products: [],
   };
 
   users.push(newUser).write();
-
   const token = signToken(newUser);
+
   return res.status(201).json({
     token,
-    user: {
-      id: newUser.id,
-      email: newUser.email,
-      name: newUser.name,
-      role: newUser.role,
-      telefono: newUser.telefono,
-      domicilio: newUser.domicilio,
-    },
+    user: { id: newUser.id, email: newUser.email, name: newUser.name, role: newUser.role },
   });
 });
 
-// --- LOGIN (Cambiado a GET) ---
+/**
+ * GET /auth/login: Verifica credenciales y entrega un Token
+ */
 app.get("/auth/login", async (req, res) => {
-  // Los datos en GET no vienen en el cuerpo, vienen en la URL (query string)
-  const { email, password } = req.query;
-
-  // Validación básica para evitar errores de búsqueda
-  if (!email || !password) {
-    return res.status(400).json({ message: "Faltan email o password en los parámetros de la URL" });
-  }
+  const { email, password } = req.query; 
 
   const user = db.get("users").find({ email }).value();
   if (!user) return res.status(401).json({ message: "Credenciales inválidas" });
-
   const ok = await bcrypt.compare(password, user.passwordHash);
-  if (!ok) return res.status(401).json({ message: "Credenciales inválidas" });
 
+  if (!ok) return res.status(401).json({ message: "Credenciales inválidas" });
   const token = signToken(user);
+
   return res.json({
     token,
-    user: {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      role: user.role,
-      telefono: user.telefono,
-      domicilio: user.domicilio,
-    },
+    user: { id: user.id, email: user.email, name: user.name, role: user.role },
   });
 });
 
-// --- PRODUCTOS (Aquí estaba el fallo del 404) ---
+// ==========================================
+// SECCIÓN DE PRODUCTOS (CRUD)
+// ==========================================
+
+/**
+ * GET /products: Obtiene la lista completa de juegos
+ */
 app.get("/products", (req, res) => {
-  // Accedemos directamente a la base de datos de lodash que usa el router
-  const products = router.db.get("products").value();
-  console.log(products);
+  const products = db.get("products").value();
   res.json(products || []);
 });
 
+/**
+ * GET /products/:id: Obtiene los detalles de un solo juego por su ID
+ */
+app.get("/products/:id", (req, res) => {
+  const { id } = req.params;
+  const product = db.get("products").find({ id }).value();
+  
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404).json({ message: "Producto no encontrado" });
+  }
+});
+
+/**
+ * POST /products: Crea un nuevo juego (Solo accesible por Admin en el Frontend)
+ */
 app.post("/products", (req, res) => {
-  const { name, price, stock, description } = req.body;
-  if (!name || price === undefined)
-    return res.status(400).json({ message: "Faltan datos" });
+  const { name, price, stock, description, imageUrl } = req.body;
+  if (!name || price === undefined) return res.status(400).json({ message: "Faltan datos" });
 
   const products = db.get("products");
   const newProduct = {
-    id: "p" + (products.size().value() + 1),
+    id: "p" + (Date.now()), 
     name,
-    price,
-    stock,
+    price: Number(price), 
+    stock: Number(stock),
     description: description || "",
+    imageUrl: imageUrl || ""
   };
 
   products.push(newProduct).write();
   res.status(201).json(newProduct);
 });
 
+/**
+ * PUT /products/:id: Actualiza los datos de un juego existente
+ */
+app.put("/products/:id", (req, res) => {
+  const { id } = req.params;
+  const productData = req.body;
+  
+  db.get("products")
+    .find({ id })
+    .assign(productData) 
+    .write();
+    
+  res.json({ id, ...productData });
+});
+
+/**
+ * DELETE /products/:id: Elimina un juego de la base de datos
+ */
 app.delete("/products/:id", (req, res) => {
   const { id } = req.params;
   db.get("products").remove({ id }).write();
+  res.status(204).send();  
+});
+
+// ==========================================
+// SECCIÓN DE USUARIOS
+// ==========================================
+
+/**
+ * DELETE /users/:id: Elimina un usuario (Gestión de admin)
+ */
+app.delete("/users/:id", (req, res) => {
+  const { id } = req.params;
+  db.get("users").remove({ id: Number(id) }).write();
   res.status(204).send();
 });
 
-app.use(jsonServer.defaults());
-app.use(router);
+// MIDDLEWARES DE CIERRE
+app.use(jsonServer.defaults()); // Registra logs de peticiones y sirve archivos estáticos
+app.use(router); // Si ninguna ruta de arriba coincidió, JSON Server intenta resolverlo solo
 
+// ARRANCAR SERVIDOR
 app.listen(PORT, () => {
-  console.log(`Servidor API corriendo en http://localhost:${PORT}`);
+  console.log(`🚀 Servidor API corriendo en http://localhost:${PORT}`);
 });

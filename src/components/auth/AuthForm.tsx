@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { loginUser, registerUser } from "../../services/authService"; // Importación limpia
+import { authService } from "../../services/authService"; 
+import { authStorage } from "../../auth/authStorage"; 
 import { useNavigate } from "react-router-dom";
 import type { AuthResponse } from "../../types/Auth";
 import "./AuthForm.css";
@@ -19,13 +20,13 @@ export const AuthForm = ({ isRegister = false }: AuthFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("1. Intentando login con:", email); // Ver si el botón funciona
+    console.log("🚀 Iniciando:", isRegister ? "Registro" : "Login");
 
     try {
-      let data: AuthResponse;
+      let data: any; // Usamos any temporalmente para debuggear la respuesta del servidor
 
       if (isRegister) {
-        data = await registerUser({
+        data = await authService.register({
           email,
           password,
           name,
@@ -34,43 +35,75 @@ export const AuthForm = ({ isRegister = false }: AuthFormProps) => {
           role: "customer",
         });
       } else {
-        data = await loginUser(email, password);
+        data = await authService.login(email, password);
       }
 
-      console.log("2. Respuesta recibida:", data); // Ver si el servidor respondió
+      console.log("DEBUG - Datos recibidos del servidor:", data);
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
+      // --- VALIDACIÓN FLEXIBLE ---
+      // Buscamos el token en diferentes formatos comunes (token o accessToken)
+      const token = data?.token || data?.accessToken;
+      
+      if (token) {
+        // Si el servidor no envió el objeto 'user' completo, creamos uno básico
+        // para que Sidebar y Header no den error.
+        const userData = data.user || { 
+          name: name || "Usuario", 
+          email: email, 
+          role: data.role || "customer" 
+        };
 
-      console.log("3. Navegando a /tienda...");
-      navigate("/tienda");
+        const sessionData: AuthResponse = {
+          token: token,
+          user: userData
+        };
+
+        console.log("✅ Sesión válida. Guardando...");
+        authStorage.set(sessionData);
+        
+        navigate("/tienda");
+      } else {
+        // Si llegamos aquí, el servidor respondió 200 pero sin token
+        throw new Error("El servidor no envió una clave de acceso válida.");
+      }
+      
     } catch (error: any) {
-      console.error("ERROR EN EL PROCESO:", error);
-      alert("Error: " + error.message);
+      console.error("❌ ERROR EN AUTH:", error);
+      
+      // Capturamos el mensaje de error de Axios o el del Error manual
+      const serverMsg = error.response?.data?.message;
+      const errorMsg = serverMsg || error.message || "Credenciales incorrectas";
+      
+      alert("Error de acceso: " + errorMsg);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="auth-form-content">
-      <h2>{isRegister ? "Crear Cuenta" : "Iniciar Sesión"}</h2>
+      <h2 className="auth-title">{isRegister ? "Crear Cuenta" : "Iniciar Sesión"}</h2>
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        required
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        required
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <div className="input-group">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          required
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+
+      <div className="input-group">
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          required
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
 
       {isRegister && (
-        <>
+        <div className="register-extra-fields">
           <input
             type="text"
             placeholder="Nombre completo"
@@ -92,10 +125,12 @@ export const AuthForm = ({ isRegister = false }: AuthFormProps) => {
             value={domicilio}
             onChange={(e) => setDomicilio(e.target.value)}
           />
-        </>
+        </div>
       )}
 
-      <button type="submit">{isRegister ? "Registrarse" : "Entrar"}</button>
+      <button type="submit" className="auth-btn">
+        {isRegister ? "Registrarse" : "Entrar"}
+      </button>
     </form>
   );
 };

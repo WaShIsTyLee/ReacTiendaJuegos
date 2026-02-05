@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 interface SidebarProps {
-  role: "admin" | "user";
+  role: "admin" | "user" | string | undefined; // Añade undefined aquí
   onLogout: () => void;
 }
 

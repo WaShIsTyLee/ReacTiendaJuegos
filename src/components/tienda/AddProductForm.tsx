@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+// 1. Importamos el servicio que usa Axios
+import { productService } from "../../services/productService";
 import type { Product } from "../../types/Product";
-import "./AddProductForm.css"; 
+import "./AddProductForm.css";
 
 interface AddProductFormProps {
   onProductAdded: (newProduct: Product) => void;
+  initialData?: Product; 
+  isEditing?: boolean;
 }
 
-export const AddProductForm = ({ onProductAdded }: AddProductFormProps) => {
-  // Inicializamos el formulario con todos los campos necesarios
+export const AddProductForm = ({ onProductAdded, initialData, isEditing }: AddProductFormProps) => {
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -16,95 +19,88 @@ export const AddProductForm = ({ onProductAdded }: AddProductFormProps) => {
     imageUrl: ""
   });
 
+  // Rellenar el formulario si estamos editando
+  useEffect(() => {
+    if (initialData) {
+      setForm({
+        name: initialData.name,
+        description: initialData.description || "",
+        price: initialData.price.toString(),
+        stock: initialData.stock.toString(),
+        imageUrl: initialData.imageUrl
+      });
+    }
+  }, [initialData]);
+
   const handleSubmit = async () => {
-    // Validación básica: Nombre, Precio e Imagen son importantes
     if (!form.name || !form.price || !form.imageUrl) {
-      return alert("Por favor, rellena los campos obligatorios (Nombre, Precio e Imagen)");
+      return alert("Por favor, rellena los campos obligatorios.");
     }
 
-    const newProductData = {
-      ...form,
-      price: Number(form.price),
-      stock: Number(form.stock) || 0, // Evitamos que el stock sea NaN
-    };
-
     try {
-      const res = await fetch("http://localhost:3000/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newProductData),
-      });
+      // Preparamos los datos convirtiendo a número
+      const productData = {
+        ...form,
+        price: Number(form.price),
+        stock: Number(form.stock)
+      };
 
-      if (res.ok) {
-        const created = await res.json();
-        onProductAdded(created);
-        // Limpiamos el formulario con los nuevos campos
-        setForm({ name: "", description: "", price: "", stock: "", imageUrl: "" });
-        alert("¡Producto creado con éxito!");
+      let savedProduct: Product;
+
+      if (isEditing && initialData) {
+        // 2. USAMOS AXIOS PARA ACTUALIZAR (PUT)
+        savedProduct = await productService.update(initialData.id, {
+          ...productData,
+          id: initialData.id
+        } as Product);
+      } else {
+        // 3. USAMOS AXIOS PARA CREAR (POST)
+        savedProduct = await productService.create(productData as Omit<Product, "id">);
       }
+
+      // Notificamos al padre (TiendaPage) para que actualice el estado global
+      onProductAdded(savedProduct);
+      
+      if(!isEditing) {
+        setForm({ name: "", description: "", price: "", stock: "", imageUrl: "" });
+      }
+      
+      alert(isEditing ? "¡Producto actualizado correctamente!" : "¡Producto creado!");
+      
     } catch (error) {
-      console.error("Error al crear producto:", error);
-      alert("Error de conexión con el servidor");
+      console.error("Error al procesar el producto:", error);
+      alert("Error al guardar los datos en el servidor.");
     }
   };
 
   return (
     <section className="admin-form-section">
-      <h2 className="section-title">🚀 Registrar Nuevo Juego</h2>
+      <h2 className="section-title">{isEditing ? "🔧 Editar Juego" : "🚀 Nuevo Juego"}</h2>
       <div className="form-grid">
         <div className="input-group">
-          <label>Nombre del Juego *</label>
-          <input 
-            type="text" 
-            placeholder="Ej: Elden Ring" 
-            value={form.name} 
-            onChange={e => setForm({...form, name: e.target.value})} 
-          />
+          <label>Nombre</label>
+          <input type="text" value={form.name} onChange={e => setForm({...form, name: e.target.value})} />
         </div>
-
         <div className="input-group">
-          <label>URL de la Carátula *</label>
-          <input 
-            type="text" 
-            placeholder="https://upload.wikimedia.org/..." 
-            value={form.imageUrl} 
-            onChange={e => setForm({...form, imageUrl: e.target.value})} 
-          />
+          <label>URL Imagen</label>
+          <input type="text" value={form.imageUrl} onChange={e => setForm({...form, imageUrl: e.target.value})} />
         </div>
-
         <div className="input-group full-width">
           <label>Descripción</label>
-          <textarea 
-            placeholder="Describe brevemente el juego..." 
-            value={form.description} 
-            onChange={e => setForm({...form, description: e.target.value})}
-          />
+          <textarea value={form.description} onChange={e => setForm({...form, description: e.target.value})} />
         </div>
-
         <div className="input-row">
           <div className="input-group">
             <label>Precio (€)</label>
-            <input 
-              type="number" 
-              placeholder="0.00" 
-              value={form.price} 
-              onChange={e => setForm({...form, price: e.target.value})} 
-            />
+            <input type="number" value={form.price} onChange={e => setForm({...form, price: e.target.value})} />
           </div>
-
           <div className="input-group">
-            <label>Stock Inicial</label>
-            <input 
-              type="number" 
-              placeholder="0" 
-              value={form.stock} 
-              onChange={e => setForm({...form, stock: e.target.value})} 
-            />
+            <label>Stock</label>
+            <input type="number" value={form.stock} onChange={e => setForm({...form, stock: e.target.value})} />
           </div>
         </div>
-
         <button className="submit-btn" onClick={handleSubmit}>
-          Añadir al Catálogo
+          {isEditing ? "GUARDAR CAMBIOS" : "CREAR PRODUCTO"}
         </button>
       </div>
     </section>

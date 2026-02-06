@@ -1,24 +1,32 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+
+// Páginas de Autenticación y Presentación
+import { LandingPage } from "./pages/Landing/LandingPage";
 import AuthPage from "./pages/Auth/AuthPage";
+import { NotFoundPage } from "./pages/NotFound/NotFoundPage";
+
+// Páginas de la Tienda
 import TiendaPage from "./pages/Tienda/TiendaPage";
+import { ProductDetailPage } from "./pages/Tienda/ProductDetailPage";
+
+// Páginas de Administración
 import { Dashboard } from "./pages/Tienda/Dashboard";
 import { AdminTablePage } from "./pages/Tienda/AdminTablePage";
 import { AddProductPage } from "./pages/Tienda/AddProductPage";
+import { EditProductPage } from "./pages/Tienda/EditProductPage";
 import { Usuarios } from "./pages/Tienda/Usuarios";
-import { EditProductPage } from "./pages/Tienda/EditProductPage"; 
-
-// 1. Importa las nuevas páginas (asegúrate de que las rutas de archivo existan)
-import { ProductDetailPage } from "./pages/Tienda/ProductDetailPage"; 
-// import { NotFoundPage } from "./pages/NotFoundPage"; // La crearemos luego
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* RUTA PÚBLICA / LOGIN */}
+        {/* 1. PRESENTACIÓN: Pantalla previa antes del login */}
+        <Route path="/" element={<LandingPage />} />
+
+        {/* 2. AUTENTICACIÓN */}
         <Route path="/login" element={<AuthPage />} />
 
-        {/* RUTAS DE ADMINISTRACIÓN (Privadas) */}
+        {/* 3. RUTAS DE ADMINISTRACIÓN (Anidadas en TiendaPage) */}
         <Route path="/admin" element={<TiendaPage />}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
@@ -28,19 +36,15 @@ function App() {
           <Route path="usuarios" element={<Usuarios />} />
         </Route>
 
-        {/* RUTAS DE TIENDA / CLIENTE (Privadas o Semiprivadas) */}
+        {/* 4. RUTAS DE CLIENTE / TIENDA */}
         <Route path="/tienda" element={<TiendaPage />}>
-          {/* Ruta para ver el detalle de un producto específico */}
-          {/* Esto permite entrar a /tienda/producto/p2 */}
+          {/* Al entrar a /tienda/producto/p1 se cargará el detalle */}
           <Route path="producto/:id" element={<ProductDetailPage />} />
         </Route>
         
-        {/* REDIRECCIÓN INICIAL */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
-
-        {/* 2. MANEJO DE ERROR 404 (En lugar de redirigir, mostramos una página) */}
-        {/* <Route path="*" element={<NotFoundPage />} /> */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
+        {/* 5. MANEJO DE ERROR 404: "Game Over" si la ruta no existe */}
+        <Route path="/404" element={<NotFoundPage />} />
+        <Route path="*" element={<Navigate to="/404" replace />} />
       </Routes>
     </Router>
   );

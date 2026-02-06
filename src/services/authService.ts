@@ -1,17 +1,17 @@
 import { http } from "./http";
 import type { AuthResponse, User } from "../types/Auth";
 
-// Endpoints (Rutas relativas porque 'http' ya tiene la baseURL)
 const AUTH_URL = "/auth";
 const USERS_URL = "/users";
 
 export const authService = {
   /**
-   * Login de usuario (GET con Query Params)
+   * Login de usuario (Cambiado a POST para mayor seguridad)
    */
   login: (email: string, password: string): Promise<AuthResponse> => {
-    const params = `?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
-    return http.get<AuthResponse>(`${AUTH_URL}/login${params}`)
+    // 1. Ya NO usamos params en la URL
+    // 2. Enviamos un objeto JSON en el cuerpo (body) de la petición
+    return http.post<AuthResponse>(`${AUTH_URL}/login`, { email, password })
       .then(res => res.data);
   },
 
@@ -29,7 +29,6 @@ export const authService = {
 
   /**
    * Eliminar un usuario (DELETE)
-   * Gracias al interceptor en http.ts, el Token se envía solo
    */
   deleteUser: (id: number | string): Promise<void> => {
     return http.delete(`${USERS_URL}/${id}`)
@@ -37,7 +36,7 @@ export const authService = {
   },
 
   /**
-   * Obtener lista de usuarios (Opcional, útil para el Admin)
+   * Obtener lista de usuarios
    */
   getAllUsers: (): Promise<User[]> => {
     return http.get<User[]>(USERS_URL)

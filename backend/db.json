@@ -1,36 +1,6 @@
 {
   "users": [
     {
-      "id": 1,
-      "email": "ana.dev@example.com",
-      "role": "customer",
-      "name": "Ana García",
-      "telefono": "+52 555-0123",
-      "domicilio": "Calle Falsa 123, Ciudad de México",
-      "passwordHash": "$2b$10$7696fM6N9V7V6S6n6P6n6Ou6N6fM6N9V7V6S6n6P6n6Ou6N6fM6",
-      "products": []
-    },
-    {
-      "id": 2,
-      "email": "beto.coder@example.com",
-      "role": "customer",
-      "name": "Beto Torres",
-      "telefono": "+52 555-9876",
-      "domicilio": "Av. Siempre Viva 742, Monterrey",
-      "passwordHash": "$2b$10$E9N17M78SInrW9vWf0p6Ue7A6K5nS6G7B7H0uYv7S7H7U7E7H7I7G",
-      "products": []
-    },
-    {
-      "id": 3,
-      "email": "paco@test.com",
-      "role": "admin",
-      "name": "Paco Garcia",
-      "telefono": "666555444",
-      "domicilio": "Calle Principal 123",
-      "passwordHash": "$2b$10$81oRHY/udMmw/lD3gtO3Qu1wZiTfpp1CLDhBrNNyiIltaSukbs1Qy",
-      "products": []
-    },
-    {
       "id": 4,
       "email": "prueba@gmail.com",
       "role": "admin",
@@ -72,24 +42,9 @@
       "id": "p4",
       "name": "Red Dead Redemption 2",
       "description": "Una historia épica de forajidos.",
-      "price": 39.99,
+      "price": 80,
       "stock": 8,
       "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg"
-    },
-    {
-      "id": "p5",
-      "name": "Hollow Knight",
-      "description": "Metroidvania de acción clásica.",
-      "price": 14.99,
-      "stock": 50,
-      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg"
-    },
-    {
-      "id": "p5",
-      "name": "League Of Legends",
-      "price": 123,
-      "stock": 21,
-      "description": "mierda"
     }
   ]
 }

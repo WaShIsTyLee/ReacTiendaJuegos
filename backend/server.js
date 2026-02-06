@@ -77,24 +77,40 @@ app.post("/auth/register", async (req, res) => {
 });
 
 /**
- * GET /auth/login: Verifica credenciales y entrega un Token
+ * POST /auth/login: Verifica credenciales y entrega un Token de forma segura
  */
-app.get("/auth/login", async (req, res) => {
-  const { email, password } = req.query; 
+app.post("/auth/login", async (req, res) => {
+  // Ahora los datos vienen en el CUERPO de la petición, no en la URL
+  const { email, password } = req.body; 
 
+  if (!email || !password) {
+    return res.status(400).json({ message: "Faltan credenciales" });
+  }
+
+  // 1. Buscar al usuario por su email
   const user = db.get("users").find({ email }).value();
   if (!user) return res.status(401).json({ message: "Credenciales inválidas" });
-  const ok = await bcrypt.compare(password, user.passwordHash);
 
+  // 2. Comparar la contraseña (hash)
+  const ok = await bcrypt.compare(password, user.passwordHash);
   if (!ok) return res.status(401).json({ message: "Credenciales inválidas" });
+
+  // 3. Generar el Token JWT
   const token = signToken(user);
 
+  // 4. Responder con el token y datos del usuario
   return res.json({
     token,
-    user: { id: user.id, email: user.email, name: user.name, role: user.role },
+    user: { 
+      id: user.id, 
+      email: user.email, 
+      name: user.name, 
+      role: user.role,
+      telefono: user.telefono,
+      domicilio: user.domicilio
+    },
   });
 });
-
 // ==========================================
 // SECCIÓN DE PRODUCTOS (CRUD)
 // ==========================================

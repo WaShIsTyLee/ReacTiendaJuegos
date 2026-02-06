@@ -23,39 +23,52 @@ export const AdminTable = ({ products, onDelete }: AdminTableProps) => {
           </tr>
         </thead>
         <tbody>
-          {products.map((p) => (
-            <tr key={p.id}>
-              <td className="td-id">#{p.id}</td>
+          {/* LÓGICA: Si hay productos, los mapeamos. Si no, mostramos el mensaje. */}
+          {products.length > 0 ? (
+            products.map((p) => (
+              <tr key={p.id}>
+                <td className="td-id">#{p.id}</td>
 
-              <td className="td-name">
-                <strong>{p.name}</strong>
-              </td>
+                <td className="td-name">
+                  <strong>{p.name}</strong>
+                </td>
 
-              <td className="td-price">
-                {p.price.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
-              </td>
+                <td className="td-price">
+                  {p.price.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
+                </td>
 
-              <td className={`td-stock ${p.stock < 5 ? 'low-stock' : ''}`}>
-                {p.stock} uds
-              </td>
+                <td className={`td-stock ${p.stock < 5 ? 'low-stock' : ''}`}>
+                  {p.stock} uds
+                </td>
 
-              <td className="td-actions">
-                <button 
-                  className="edit-btn"
-                  onClick={() => navigate(`/admin/editar/${p.id}`)}
-                >
-                  Editar
-                </button>
-                
-                <button 
-                  className="delete-btn" 
-                  onClick={() => onDelete(p.id)}
-                >
-                  Eliminar
-                </button>
+                <td className="td-actions">
+                  <button 
+                    className="edit-btn"
+                    onClick={() => navigate(`/admin/editar/${p.id}`)}
+                  >
+                    Editar
+                  </button>
+                  
+                  <button 
+                    className="delete-btn" 
+                    onClick={() => onDelete(p.id)}
+                  >
+                    Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            /* FILA DE ESTADO VACÍO */
+            <tr>
+              <td colSpan={5} className="no-results">
+                <div className="no-results-content">
+                  <span className="no-results-icon">🔍</span>
+                  <p>No se han obtenido resultados o el inventario está vacío.</p>
+                </div>
               </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

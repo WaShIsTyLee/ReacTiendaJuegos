@@ -57,14 +57,12 @@ export const AddProductForm = ({ onProductAdded, initialData, isEditing }: AddPr
       let savedProduct: Product;
 
       if (isEditing && initialData) {
-        // Operación de Update
         savedProduct = await productService.update(initialData.id, {
           ...productPayload,
           id: initialData.id
         } as Product);
         showToast("¡Videojuego actualizado correctamente!", "success");
       } else {
-        // Operación de Create
         savedProduct = await productService.create(productPayload);
         showToast("¡Nuevo videojuego añadido al catálogo!", "success");
       }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AuthForm } from "../../components/auth/AuthForm";
-import "./AuthPage.css"; // Importamos el nuevo CSS
+import "./AuthPage.css";
 
 const AuthPage = () => {
   const [isRegister, setIsRegister] = useState(false);

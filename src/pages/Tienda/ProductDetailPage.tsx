@@ -9,7 +9,6 @@ export const ProductDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   
-  // Intentamos obtener los productos del contexto del Outlet (TiendaPage)
   const context = useOutletContext<{ products: Product[] }>();
   
   const [product, setProduct] = useState<Product | null>(null);
@@ -20,9 +19,7 @@ export const ProductDetailPage = () => {
       try {
         setLoading(true);
 
-        // 1. Intentar buscarlo primero en la lista global (Contexto)
         if (context?.products) {
-          // Usamos == para que compare "2" (string de URL) con 2 (number de DB)
           const found = context.products.find(p => p.id == id);
           if (found) {
             setProduct(found);
@@ -31,7 +28,6 @@ export const ProductDetailPage = () => {
           }
         }
 
-        // 2. Si no está en el contexto, lo pedimos al servidor
         if (id) {
           const data = await productService.getById(id);
           setProduct(data);

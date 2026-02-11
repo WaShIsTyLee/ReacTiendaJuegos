@@ -3,7 +3,6 @@ import type { TiendaContextType } from "../Tienda/TiendaPage";
 import { AdminTable } from "../../components/tienda/AdminTable";
 
 export const AdminTablePage = () => {
-  // Extraemos products y handleDelete del contexto del Outlet
   const { products, handleDelete } = useOutletContext<TiendaContextType>();
 
   return (

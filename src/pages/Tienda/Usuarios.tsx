@@ -24,7 +24,6 @@ export const Usuarios = () => {
   }, [showToast]);
 
   const handleDelete = async (id: number | string, name: string) => {
-    // Sustituimos alert por confirmación lógica (opcional mantener window.confirm para seguridad)
     const proceed = window.confirm(`¿Estás seguro de que quieres eliminar a ${name}?`);
     
     if (proceed) {

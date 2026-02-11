@@ -4,7 +4,6 @@ import { StatCard } from "../../components/misc/StatCard";
 export const Dashboard = () => {
   const { products } = useOutletContext<TiendaContextType>();
 
-  // Lógica de cálculo (se mantiene igual)
   const totalProducts = products?.length || 0;
   const totalStock = products?.reduce((acc, p) => acc + (Number(p.stock) || 0), 0) || 0;
   const totalValue = products?.reduce((acc, p) => {

@@ -10,7 +10,88 @@
     0 0 10px rgba(6, 182, 212, 0.3),
     inset 0 0 8px rgba(6, 182, 212, 0.1);
 }
+/* Fondo oscuro que cubre la pantalla con un desenfoque leve */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.85); /* Azul muy oscuro semitransparente */
+  backdrop-filter: blur(4px); /* Efecto de desenfoque al fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
+/* Caja del modal con el estilo de la tabla */
+.modal-content {
+  background: rgba(15, 23, 42, 0.95);
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  color: #e5e7eb;
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 
+    0 0 20px rgba(6, 182, 212, 0.2),
+    inset 0 0 10px rgba(6, 182, 212, 0.1);
+}
+
+.modal-content h3 {
+  color: #67e8f9;
+  text-shadow: 0 0 8px rgba(103, 232, 249, 0.5);
+  margin-bottom: 1rem;
+}
+
+.modal-content strong {
+  color: #67e8f9;
+}
+
+.modal-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Botón Cancelar - Estilo neutro pero tecnológico */
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Botón Eliminar - Usando tu degradado de eliminar */
+.btn-danger {
+  background: linear-gradient(90deg, #f43f5e, #e11d48);
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
+}
+
+.btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    0 0 15px rgba(244, 63, 94, 0.7),
+    0 0 25px rgba(225, 29, 72, 0.4);
+}
 /* Encabezado */
 .admin-table thead {
   background: rgba(6, 182, 212, 0.1);

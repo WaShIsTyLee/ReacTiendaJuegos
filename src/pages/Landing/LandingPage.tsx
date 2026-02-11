@@ -8,7 +8,6 @@ export const LandingPage = () => {
 
   return (
     <div className="landing-container">
-      {/* NAVEGACIÓN */}
       <nav className="landing-nav">
         <div className="logo">WASHI<span>STORE</span></div>
         <AuthButton 
@@ -18,7 +17,6 @@ export const LandingPage = () => {
         />
       </nav>
 
-      {/* SECCIÓN HERO */}
       <header className="hero-section">
         <div className="hero-content">
           <h1>Tu Próxima Aventura Comienza Aquí</h1>
@@ -39,7 +37,6 @@ export const LandingPage = () => {
         </div>
       </header>
 
-      {/* CARACTERÍSTICAS REUTILIZANDO STATCARD */}
       <section className="features">
         <StatCard 
           icon="🎮" 

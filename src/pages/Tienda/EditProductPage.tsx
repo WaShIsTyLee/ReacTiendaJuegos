@@ -8,13 +8,12 @@ export const EditProductPage = () => {
   const navigate = useNavigate();
   const { products, handleProductAdded } = useOutletContext<TiendaContextType>();
 
-  // Buscamos el producto en nuestro estado global por su ID
-  // Usamos String() en ambos lados para evitar fallos si uno es number y otro string
+  
   const productToEdit = products.find(p => String(p.id) === String(id));
 
   const onUpdateSuccess = (updated: Product) => {
-    handleProductAdded(updated); // Actualiza el array global en TiendaPage
-    navigate("/admin/inventario"); // Redirige automáticamente a la tabla
+    handleProductAdded(updated); 
+    navigate("/admin/inventario"); 
   };
 
   if (!productToEdit) {

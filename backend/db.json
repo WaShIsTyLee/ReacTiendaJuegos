@@ -23,7 +23,7 @@
   ],
   "products": [
     {
-      "id": "p2",
+      "id": "p1",
       "name": "Elden Ring",
       "description": "Desafiante RPG de acción en las Tierras Intermedias.",
       "price": 69.99,
@@ -31,7 +31,7 @@
       "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg"
     },
     {
-      "id": "p3",
+      "id": "p2",
       "name": "Cyberpunk 2077",
       "description": "RPG de acción futurista en Night City.",
       "price": 49.99,
@@ -39,12 +39,52 @@
       "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/header.jpg"
     },
     {
+      "id": "p3",
+      "name": "The Witcher 3: Wild Hunt",
+      "description": "Conviértete en Geralt de Rivia, un cazador de monstruos en un mundo abierto épico.",
+      "price": 29.99,
+      "stock": 15,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/292030/header.jpg"
+    },
+    {
       "id": "p4",
+      "name": "Hollow Knight",
+      "description": "Una aventura de acción clásica en 2D en un vasto mundo interconectado.",
+      "price": 14.99,
+      "stock": 50,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/367520/header.jpg"
+    },
+    {
+      "id": "p5",
       "name": "Red Dead Redemption 2",
-      "description": "Una historia épica de forajidos.",
-      "price": 80,
+      "description": "Una epopeya de forajidos en el corazón de Estados Unidos en los albores de la era moderna.",
+      "price": 59.99,
       "stock": 8,
       "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg"
+    },
+    {
+      "id": "p6",
+      "name": "God of War",
+      "description": "Kratos vuelve como padre en una tierra de deidades y monstruos nórdicos.",
+      "price": 49.99,
+      "stock": 12,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1593500/header.jpg"
+    },
+    {
+      "id": "p7",
+      "name": "Stardew Valley",
+      "description": "Has heredado la vieja parcela agrícola de tu abuelo en Stardew Valley.",
+      "price": 13.99,
+      "stock": 100,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg"
+    },
+    {
+      "id": "p8",
+      "name": "Baldur's Gate 4",
+      "description": "Reúne a tu grupo y regresa a los Reinos Olvidados en una historia de compañerismo y traición.",
+      "price": 59.99,
+      "stock": 19,
+      "imageUrl": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1086940/header.jpg"
     }
   ]
 }

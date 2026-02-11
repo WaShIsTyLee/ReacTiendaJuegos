@@ -141,22 +141,32 @@ app.get("/products/:id", (req, res) => {
  * POST /products: Crea un nuevo juego (Solo accesible por Admin en el Frontend)
  */
 app.post("/products", (req, res) => {
-  const { name, price, stock, description, imageUrl } = req.body;
-  if (!name || price === undefined) return res.status(400).json({ message: "Faltan datos" });
+  const { name, price, stock = 0, description = "", imageUrl = "" } = req.body;
 
-  const products = db.get("products");
+  if (!name || price === undefined) {
+    return res.status(400).json({ message: "Faltan datos obligatorios (name, price)" });
+  }
+
+  const products = db.get("products").value();
+
+  const maxId = products.length
+    ? Math.max(...products.map(p => Number(p.id.replace("p", ""))))
+    : 0;
+
   const newProduct = {
-    id: "p" + (Date.now()), 
+    id: `p${maxId + 1}`,
     name,
-    price: Number(price), 
+    price: Number(price),
     stock: Number(stock),
-    description: description || "",
-    imageUrl: imageUrl || ""
+    description,
+    imageUrl
   };
 
-  products.push(newProduct).write();
+  db.get("products").push(newProduct).write();
+
   res.status(201).json(newProduct);
 });
+
 
 /**
  * PUT /products/:id: Actualiza los datos de un juego existente

@@ -56,6 +56,61 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+/* Estilo base de la tarjeta reutilizable */
+.card {
+  background: #1e293b; /* El mismo azul oscuro que tu landing */
+  padding: 2.5rem 2rem;
+  border-radius: 15px;
+  text-align: center;
+  border: 1px solid #334155;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+/* Efecto Hover para que se sienta interactiva */
+.card:hover {
+  transform: translateY(-10px);
+  border-color: #06b6d4;
+  box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
+}
+
+/* El icono (emoji o icono de fuente) */
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+/* El título (H4) */
+.card h4 {
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* El valor destacado */
+.card-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0.5rem 0 0 0;
+}
+
+/* Adaptación para pantallas pequeñas */
+@media (max-width: 768px) {
+  .card {
+    padding: 2rem;
+  }
+  .card-value {
+    font-size: 1.5rem;
+  }
+}
 
 .hero-content p {
   font-size: 1.2rem;

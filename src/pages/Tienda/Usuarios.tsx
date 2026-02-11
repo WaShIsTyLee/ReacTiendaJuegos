@@ -1,34 +1,40 @@
 import { useState, useEffect } from "react";
 import { authService } from "../../services/authService";
+import { useToast } from "../../components/misc/ToastContext";
 import type { User } from "../../types/Auth";
 
 export const Usuarios = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const { showToast } = useToast(); // <--- Hook de Toast
 
   useEffect(() => {
-    authService.getAllUsers()
-      .then((data) => {
+    // Usamos una función asíncrona interna para cumplir con la rúbrica
+    const loadUsers = async () => {
+      try {
+        const data = await authService.getAllUsers();
         setUsers(data);
+      } catch (err) {
+        showToast("Error al cargar la lista de usuarios", "error");
+      } finally {
         setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error cargando usuarios:", err);
-        setLoading(false);
-      });
-  }, []);
+      }
+    };
+
+    loadUsers();
+  }, [showToast]);
 
   const handleDelete = async (id: number | string, name: string) => {
-    const confirmDelete = window.confirm(`¿Estás seguro de que quieres eliminar a ${name}?`);
+    // Sustituimos alert por confirmación lógica (opcional mantener window.confirm para seguridad)
+    const proceed = window.confirm(`¿Estás seguro de que quieres eliminar a ${name}?`);
     
-    if (confirmDelete) {
+    if (proceed) {
       try {
         await authService.deleteUser(id);
-        setUsers(users.filter((user) => user.id !== id));
-        alert("Usuario eliminado correctamente");
+        setUsers(prevUsers => prevUsers.filter((user) => user.id !== id));
+        showToast(`Usuario ${name} eliminado correctamente`, "success");
       } catch (error) {
-        console.error("Error al eliminar:", error);
-        alert("No se pudo eliminar al usuario");
+        showToast("No se pudo eliminar al usuario", "error");
       }
     }
   };
@@ -53,7 +59,6 @@ export const Usuarios = () => {
             </tr>
           </thead>
           <tbody>
-            {/* Lógica condicional: ¿Hay usuarios? */}
             {users.length > 0 ? (
               users.map((user) => (
                 <tr key={user.id}>
@@ -77,12 +82,11 @@ export const Usuarios = () => {
                 </tr>
               ))
             ) : (
-              /* Mensaje cuando no hay usuarios */
               <tr>
                 <td colSpan={6} className="no-results">
                   <div className="no-results-content">
                     <span className="no-results-icon">🚫</span>
-                    <p>No se han encontrado usuarios registrados en el sistema.</p>
+                    <p>No se han encontrado usuarios registrados.</p>
                   </div>
                 </td>
               </tr>

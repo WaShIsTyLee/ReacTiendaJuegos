@@ -9,7 +9,6 @@ export const Usuarios = () => {
   const { showToast } = useToast(); // <--- Hook de Toast
 
   useEffect(() => {
-    // Usamos una función asíncrona interna para cumplir con la rúbrica
     const loadUsers = async () => {
       try {
         const data = await authService.getAllUsers();

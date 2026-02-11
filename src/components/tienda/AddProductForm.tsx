@@ -13,7 +13,7 @@ interface AddProductFormProps {
 
 export const AddProductForm = ({ onProductAdded, initialData, isEditing }: AddProductFormProps) => {
   const { showToast } = useToast();
-  const [loading, setLoading] = useState(false); // Gestión de estado de carga
+  const [loading, setLoading] = useState(false); 
   
   const [form, setForm] = useState({
     name: "",

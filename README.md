@@ -1,74 +1,77 @@
-# React + TypeScript + Vite
+# 🎮 GameStore Admin - Sistema de Gestión de Videojuegos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación Web de alto rendimiento desarrollada con **React 18** y **TypeScript**. El proyecto implementa una arquitectura escalable basada en servicios, gestión de estado global y un sistema de autenticación robusto mediante JWT.
 
-Currently, two official plugins are available:
+**Autor:** [Juan Jesus Lopez Solano]
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🛠️ Instalación y Configuración
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+Sigue estos pasos para poner en marcha el entorno de desarrollo:
 
-## Expanding the ESLint configuration
+### 1. Requisitos previos
+- Node.js (v18 o superior)
+- npm o yarn
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 2. Clonar y preparar
+```bash
+# Clonar el repositorio
+git clone https://github.com/WaShIsTyLee/ReacTiendaJuegos.git
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Entrar en la carpeta
+cd 
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Instalar dependencias
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3. Servidor de Datos (Mock API)
+La aplicacion usa Json per se levanta mediante un Docker Compose asi que docker-compose up --build
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+4. Ejecutar la Aplicación
+npm run dev
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-"# ReacTiendaJuegos" 
+👤 Credenciales de Acceso
+
+Admin:
+prueba@gmail.com
+123
+
+Usuario:
+pepe@gmail.com
+123
+
+🚀 Detalles Técnicos y Arquitectura
+
+Arquitectura Modular: Uso de Nested Routes (Rutas Anidadas) mediante <Outlet /> y ReactRouter, permitiendo un layout persistente (Sidebar/Header) y una navegación  fluida.
+
+Comunicación Asíncrona: Implementación de servicios con Axios, utilizando interceptores para la inyección automática del JWT en las cabeceras Authorization.
+
+Gestión de Estado y Ciclo de Vida:
+
+useState: Control de formularios y estados de carga.
+
+useEffect: Sincronización con la API y protección de rutas.
+
+useRef: Optimización de peticiones para evitar duplicidad en el renderizado.
+
+useContext: Sistema global de notificaciones (Toasts).
+
+Seguridad: Persistencia de sesión en localStorage y manejo de errores HTTP (401 Unauthorized) para redirección automática al Login.
+
+✅ Checklist de Requisitos Cumplidos
+[x] CRUD Completo: Operaciones funcionales de creación, lectura, edición y borrado.
+
+[x] Async/Await: Gestión de promesas con manejo de estados loading.
+
+[x] Protección de Rutas: Acceso restringido según el rol y la existencia de token.
+
+[x] Interfaz Adaptativa: Uso de componentes reutilizables y CSS optimizado.
+
+[x] Validación y Errores: Control de excepciones mediante bloques try/catch y feedback visual al usuario.
+
+Endpoints
+<img width="639" height="371" alt="image" src="https://github.com/user-attachments/assets/df8511bf-54c4-45ba-b19f-208072586c2b" />
+
+

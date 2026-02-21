@@ -71,7 +71,9 @@ Seguridad: Persistencia de sesión en localStorage y manejo de errores HTTP (401
 
 [x] Validación y Errores: Control de excepciones mediante bloques try/catch y feedback visual al usuario.
 
-Endpoints
+Endpoints:                         
+
+
 <img width="639" height="371" alt="image" src="https://github.com/user-attachments/assets/df8511bf-54c4-45ba-b19f-208072586c2b" />
 
 

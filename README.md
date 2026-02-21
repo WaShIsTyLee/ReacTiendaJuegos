@@ -15,7 +15,7 @@ Sigue estos pasos para poner en marcha el entorno de desarrollo:
 - npm o yarn
 
 ### 2. Clonar y preparar
-```bash
+
 # Clonar el repositorio
 git clone https://github.com/WaShIsTyLee/ReacTiendaJuegos.git
 

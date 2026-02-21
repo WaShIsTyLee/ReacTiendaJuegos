@@ -25,10 +25,10 @@ cd
 # Instalar dependencias
 npm install
 
-3. Servidor de Datos (Mock API)
+### 3. Servidor de Datos (Mock API)
 La aplicacion usa Json per se levanta mediante un Docker Compose asi que docker-compose up --build
 
-4. Ejecutar la Aplicación
+### 4. Ejecutar la Aplicación
 npm run dev
 
 
@@ -60,7 +60,7 @@ useContext: Sistema global de notificaciones (Toasts).
 
 Seguridad: Persistencia de sesión en localStorage y manejo de errores HTTP (401 Unauthorized) para redirección automática al Login.
 
-✅ Checklist de Requisitos Cumplidos
+### ✅ Checklist de Requisitos Cumplidos
 [x] CRUD Completo: Operaciones funcionales de creación, lectura, edición y borrado.
 
 [x] Async/Await: Gestión de promesas con manejo de estados loading.

@@ -44,7 +44,7 @@ Contraseña -- 123
 
 🚀 Detalles Técnicos y Arquitectura
 
-Arquitectura Modular: Uso de Nested Routes (Rutas Anidadas) mediante <Outlet /> y ReactRouter, permitiendo un layout persistente (Sidebar/Header) y una navegación  fluida.
+Arquitectura Modular: Uso de Rutas Anidadas mediante Outlet y ReactRouter, permitiendo un layout persistente (Sidebar/Header) y una navegación  fluida.
 
 Comunicación Asíncrona: Implementación de servicios con Axios, utilizando interceptores para la inyección automática del JWT en las cabeceras Authorization.
 

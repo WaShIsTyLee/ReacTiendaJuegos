@@ -1,77 +1,110 @@
-# 🎮 GameStore Admin - Sistema de Gestión de Videojuegos
+🎮 GameStore Admin
+Sistema de Gestión de Videojuegos
 
-Aplicación Web de alto rendimiento desarrollada con **React 18** y **TypeScript**. El proyecto implementa una arquitectura escalable basada en servicios, gestión de estado global y un sistema de autenticación robusto mediante JWT.
+Aplicación web de alto rendimiento desarrollada con React 18 y TypeScript.
+El proyecto implementa una arquitectura escalable basada en servicios, gestión de estado global y autenticación segura mediante JWT.
 
-**Autor:** [Juan Jesus Lopez Solano]
+Autor: Juan Jesus Lopez Solano
 
----
+🛠️ Instalación y Configuración
+1️⃣ Requisitos Previos
 
-## 🛠️ Instalación y Configuración
+Node.js (v18 o superior)
 
-### 1. Requisitos previos
-- Node.js (v18 o superior)
-- npm o yarn
+npm o yarn
 
-### 2. Clonar y preparar
+Docker (para la API)
 
-# Clonar el repositorio
-git clone https://github.com/WaShIsTyLee/ReacTiendaJuegos.git
+2️⃣ Clonar y Preparar el Proyecto
 
-# Entrar en la carpeta
-cd 
+Clona el repositorio:
+https://github.com/WaShIsTyLee/ReacTiendaJuegos.git
 
-# Instalar dependencias
+Después, accede a la carpeta del proyecto e instala las dependencias con:
+
 npm install
 
-### 3. Servidor API
-La aplicacion usa Json per se levanta mediante un Docker Compose asi que docker-compose up --build
+3️⃣ Servidor API
 
-### 4. Ejecutar la Aplicación
+La aplicación utiliza una API basada en JSON que se levanta mediante Docker Compose.
+
+Ejecuta:
+
+docker-compose up --build
+
+4️⃣ Ejecutar la Aplicación
+
+Una vez levantada la API, inicia el entorno de desarrollo con:
+
 npm run dev
-
 
 👤 Credenciales de Acceso
 
-Admin:
-Usuario -- prueba@gmail.com
-Contraseña -- 123
+🔐 Administrador
 
-Usuario:
-Usuario -- pepe@gmail.com
-Contraseña -- 123
+Usuario → prueba@gmail.com
+
+Contraseña → 123
+
+👤 Usuario
+
+Usuario → pepe@gmail.com
+
+Contraseña → 123
 
 🚀 Detalles Técnicos y Arquitectura
+🧩 Arquitectura Modular
 
-Arquitectura Modular: Uso de Rutas Anidadas mediante Outlet y ReactRouter, permitiendo un layout persistente (Sidebar/Header) y una navegación  fluida.
+Uso de rutas anidadas mediante Outlet y React Router, permitiendo:
 
-Comunicación Asíncrona: Implementación de servicios con Axios, utilizando interceptores para la inyección automática del JWT en las cabeceras Authorization.
+Layout persistente (Sidebar + Header)
 
-Gestión de Estado y Ciclo de Vida:
+Separación clara por módulos
 
-useState: Control de formularios y estados de carga.
+🔄 Comunicación Asíncrona
 
-useEffect: Sincronización con la API y protección de rutas.
+Implementación de servicios con Axios, incluyendo:
 
-useRef: Optimización de peticiones para evitar duplicidad en el renderizado.
+Interceptores para inyección automática del JWT
 
-useContext: Sistema global de notificaciones (Toasts).
+Cabeceras Authorization centralizadas
 
-Seguridad: Persistencia de sesión en localStorage y manejo de errores HTTP (401 Unauthorized) para redirección automática al Login.
+Manejo global de errores HTTP
 
-### ✅ Checklist de Requisitos Cumplidos
-[x] CRUD Completo: Operaciones funcionales de creación, lectura, edición y borrado.
+🧠 Gestión de Estado y Ciclo de Vida
 
-[x] Async/Await: Gestión de promesas con manejo de estados loading.
+useState → Control de formularios y estados de carga
 
-[x] Protección de Rutas: Acceso restringido según el rol y la existencia de token.
+useEffect → Sincronización con la API y protección de rutas
 
-[x] Interfaz Adaptativa: Uso de componentes reutilizables y CSS optimizado.
+useRef → Prevención de renderizados duplicados
 
-[x] Validación y Errores: Control de excepciones mediante bloques try/catch y feedback visual al usuario.
+useContext → Sistema global de notificaciones (Toasts)
 
-Endpoints:                         
+🔐 Seguridad
 
+Persistencia de sesión en localStorage
 
-<img width="639" height="371" alt="image" src="https://github.com/user-attachments/assets/df8511bf-54c4-45ba-b19f-208072586c2b" />
+Manejo automático de errores 401 Unauthorized
 
+Redirección al login cuando el token expira
 
+Protección de rutas según autenticación y rol
+
+✅ Checklist de Requisitos Cumplidos
+
+ CRUD completo (crear, leer, editar y eliminar)
+
+ Uso de Async/Await con estados de loading
+
+ Protección de rutas por autenticación y rol
+
+ Interfaz adaptativa y componentes reutilizables
+
+ Manejo de errores con try/catch y feedback visual
+
+📡 Endpoints
+
+A continuación se muestra una vista general de los endpoints disponibles en la API:
+
+<img width="639" height="371" alt="Endpoints API" src="https://github.com/user-attachments/assets/df8511bf-54c4-45ba-b19f-208072586c2b" />

@@ -35,12 +35,12 @@ npm run dev
 👤 Credenciales de Acceso
 
 Admin:
-prueba@gmail.com
-123
+Usuario -- prueba@gmail.com
+Contraseña -- 123
 
 Usuario:
-pepe@gmail.com
-123
+Usuario -- pepe@gmail.com
+Contraseña -- 123
 
 🚀 Detalles Técnicos y Arquitectura
 

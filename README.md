@@ -8,8 +8,6 @@ Aplicación Web de alto rendimiento desarrollada con **React 18** y **TypeScript
 
 ## 🛠️ Instalación y Configuración
 
-Sigue estos pasos para poner en marcha el entorno de desarrollo:
-
 ### 1. Requisitos previos
 - Node.js (v18 o superior)
 - npm o yarn

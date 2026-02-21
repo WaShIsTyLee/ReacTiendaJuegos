@@ -23,7 +23,7 @@ cd
 # Instalar dependencias
 npm install
 
-### 3. Servidor de Datos (Mock API)
+### 3. Servidor API
 La aplicacion usa Json per se levanta mediante un Docker Compose asi que docker-compose up --build
 
 ### 4. Ejecutar la Aplicación
